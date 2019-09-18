@@ -1,0 +1,28 @@
+node {
+    stage('clone repo') {
+        def repoUrl = scm.getUserRemoteConfigs()[0].getUrl()
+        checkout(
+            [
+                $class: 'GitSCM',
+                branches: [
+                    [
+                        name: "*/master"
+                    ]
+                ],
+                doGenerateSubmoduleConfigurations: false,
+
+                userRemoteConfigs: [
+                    [
+                        // credentialsId: sshCredentialName,
+                        url: repoUrl
+                    ]
+                ]
+            ]
+        )
+    }
+
+
+    stage('build') {
+        sh 'mvn clean package'
+    }
+}
