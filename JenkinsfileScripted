@@ -25,4 +25,8 @@ node {
     stage('build') {
         sh 'mvn clean package'
     }
+
+    stage('Docker image') {
+        sh './mvnw jib:dockerBuild'
+    }
 }
