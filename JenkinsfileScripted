@@ -27,6 +27,9 @@ node {
     // }
 
     stage('Docker image') {
-        sh './mvnw jib:dockerBuild'
+        sh '''
+            ./mvnw jib:dockerBuild
+            eval $(minikube docker-env)
+        '''
     }
 }
